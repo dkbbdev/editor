@@ -63,6 +63,7 @@ const DkbbCabinetTool = () => {
       widthMm: (toolDefaults.widthMm as number) ?? base.widthMm,
       depthMm: (toolDefaults.depthMm as number) ?? base.depthMm,
       heightMm: (toolDefaults.heightMm as number) ?? base.heightMm,
+      stack: (toolDefaults.stack as DkbbCabinetNode['stack']) ?? base.stack,
     })
   }, [activeLevelId])
 
