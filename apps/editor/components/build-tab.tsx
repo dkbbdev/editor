@@ -143,6 +143,18 @@ const MODULAR_CABINET_CATALOG_ITEM = CATALOG_ITEMS.find((item) => item.id === 'c
 const MODULAR_CABINET_ICON = MODULAR_CABINET_CATALOG_ITEM?.thumbnail ?? '/icons/item.webp'
 
 /**
+ * DKBB V24 kitchen tiles — each seeds the cabinet placement tool with its
+ * preset id (dimensions/stack come from the shared CABINET_PRESETS registry).
+ */
+const DKBB_KITCHEN_TILES: { presetId: string; label: string; hint: string; tooltip: string }[] = [
+  { presetId: 'dkbb-u-1d1dw', label: 'U 1D1Dw', hint: '600', tooltip: 'U_1D1Dw — ลิ้นชัก 1 + ประตูคู่ (600×576×850)' },
+  { presetId: 'dkbb-u-2dw', label: 'U 2Dw', hint: '600', tooltip: 'U_2Dw — ลิ้นชัก 2 + ประตูคู่ (600×673×700)' },
+  { presetId: 'dkbb-u-3dw', label: 'U 3Dw', hint: '980', tooltip: 'U_3Dw — ลิ้นชัก 3 + ประตูคู่ (980×624×700)' },
+  { presetId: 'dkbb-u-sink', label: 'U Sink', hint: '1000', tooltip: 'U_Sink — ตู้ซิงค์ (1000×576×850)' },
+  { presetId: 'dkbb-u-oven', label: 'U Oven', hint: '600', tooltip: 'UOven — ตู้เตาอบ (600×576×850)' },
+]
+
+/**
  * Activate a raw structure draw/cursor tool. Mirrors the editor's own
  * structure-tool activation (`setPhase`/`setStructureLayer`/`setMode`/`setTool`).
  */
@@ -166,10 +178,11 @@ function activateBuildTool(kind: string): void {
   ed.setTool(kind)
 }
 
-function activateModularCabinetTool(): void {
+function activateModularCabinetTool(presetId?: string): void {
   const ed = useEditor.getState()
   useViewer.getState().setSelection({ selectedIds: [], zoneId: null })
   if (MODULAR_CABINET_CATALOG_ITEM) ed.setSelectedItem(MODULAR_CABINET_CATALOG_ITEM)
+  ed.setToolDefaults('cabinet', presetId ? { placementPresetId: presetId } : null)
   ed.setPhase('structure')
   ed.setStructureLayer('elements')
   ed.setCatalogCategory(null)
@@ -528,6 +541,31 @@ export function BuildTab() {
                   Modular Cabinet
                 </TooltipContent>
               </Tooltip>
+              {DKBB_KITCHEN_TILES.map((tile) => (
+                <Tooltip key={tile.presetId}>
+                  <TooltipTrigger asChild>
+                    <button
+                      className="group relative flex aspect-square flex-col items-center justify-center gap-0.5 rounded-xl bg-muted/40 p-1 opacity-80 ring-1 ring-muted transition-all duration-200 hover:bg-muted hover:opacity-100"
+                      onClick={() => {
+                        triggerSFX('sfx:menu-click')
+                        activateModularCabinetTool(tile.presetId)
+                      }}
+                      onMouseEnter={() => triggerSFX('sfx:menu-hover')}
+                      type="button"
+                    >
+                      <span className="text-[9px] font-semibold leading-tight text-foreground/80">
+                        {tile.label}
+                      </span>
+                      <span className="text-[8px] leading-tight text-muted-foreground">
+                        {tile.hint}
+                      </span>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent className="pointer-events-none" side="top">
+                    {tile.tooltip}
+                  </TooltipContent>
+                </Tooltip>
+              ))}
             </div>
           </TooltipProvider>
         </div>

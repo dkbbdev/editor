@@ -77,7 +77,14 @@ test('cabinet creation defaults use the metric 600 mm family', () => {
     carcassHeight: CABINET_METRIC_DEFAULTS.carcassHeight,
   })
   for (const preset of CABINET_PRESETS) {
-    expect(preset.createPatch().depth).toBeCloseTo(CABINET_METRIC_DEFAULTS.depth)
+    // DKBB V24 presets carry the Thai kitchen depths (576/624/673 mm); the
+    // built-in family stays at the metric default.
+    if (preset.id.startsWith('dkbb-')) {
+      expect(preset.createPatch().depth).toBeGreaterThan(0.5)
+      expect(preset.createPatch().depth).toBeLessThanOrEqual(0.8)
+    } else {
+      expect(preset.createPatch().depth).toBeCloseTo(CABINET_METRIC_DEFAULTS.depth)
+    }
   }
 })
 

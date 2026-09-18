@@ -23,6 +23,11 @@ export type CabinetPresetId =
   | 'tall-pantry'
   | 'oven-tower'
   | 'fridge-single'
+  | 'dkbb-u-1d1dw'
+  | 'dkbb-u-2dw'
+  | 'dkbb-u-3dw'
+  | 'dkbb-u-sink'
+  | 'dkbb-u-oven'
 
 export type CabinetPreset = {
   id: CabinetPresetId
@@ -194,6 +199,80 @@ export const CABINET_PRESETS: CabinetPreset[] = [
       handlePosition: 'center',
       frontOverlay: 'full',
       stack: fridgeCabinetStack('fridge-single'),
+    }),
+  },
+  // ── DKBB V24 kitchen presets (dimensions from the V24 library, in meters) ──
+  {
+    id: 'dkbb-u-1d1dw',
+    label: 'U_1D1Dw',
+    createPatch: (run) => ({
+      ...baseShared(run),
+      name: 'U_1D1Dw',
+      width: 0.6,
+      depth: 0.576,
+      carcassHeight: 0.85 - CABINET_METRIC_DEFAULTS.plinthHeight,
+      stack: [
+        { ...newCabinetCompartment('drawer'), height: 0.15, drawerCount: 1 },
+        { ...newCabinetCompartment('door'), doorType: 'double', shelfCount: 1 },
+      ],
+    }),
+  },
+  {
+    id: 'dkbb-u-2dw',
+    label: 'U_2Dw',
+    createPatch: (run) => ({
+      ...baseShared(run),
+      name: 'U_2Dw',
+      width: 0.6,
+      depth: 0.673,
+      carcassHeight: 0.7 - CABINET_METRIC_DEFAULTS.plinthHeight,
+      stack: [
+        { ...newCabinetCompartment('drawer'), height: 0.15, drawerCount: 2 },
+        { ...newCabinetCompartment('door'), doorType: 'double', shelfCount: 1 },
+      ],
+    }),
+  },
+  {
+    id: 'dkbb-u-3dw',
+    label: 'U_3Dw',
+    createPatch: (run) => ({
+      ...baseShared(run),
+      name: 'U_3Dw',
+      width: 0.98,
+      depth: 0.624,
+      carcassHeight: 0.7 - CABINET_METRIC_DEFAULTS.plinthHeight,
+      stack: [
+        { ...newCabinetCompartment('drawer'), height: 0.15, drawerCount: 3 },
+        { ...newCabinetCompartment('door'), doorType: 'double', shelfCount: 1 },
+      ],
+    }),
+  },
+  {
+    id: 'dkbb-u-sink',
+    label: 'U_Sink',
+    createPatch: (run) => ({
+      ...baseShared(run),
+      name: 'U_Sink',
+      width: 1.0,
+      depth: 0.576,
+      carcassHeight: 0.85 - CABINET_METRIC_DEFAULTS.plinthHeight,
+      stack: sinkCabinetStack(),
+    }),
+  },
+  {
+    id: 'dkbb-u-oven',
+    label: 'UOven',
+    createPatch: (run) => ({
+      ...baseShared(run),
+      name: 'UOven',
+      width: 0.6,
+      depth: 0.576,
+      carcassHeight: 0.85 - CABINET_METRIC_DEFAULTS.plinthHeight,
+      stack: [
+        { ...newCabinetCompartment('drawer'), height: 0.15, drawerCount: 2 },
+        newCabinetCompartment('oven'),
+        newCabinetCompartment('door'),
+      ],
     }),
   },
 ]

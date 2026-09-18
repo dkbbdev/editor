@@ -90,7 +90,7 @@ import {
 } from './placement-snap'
 import useCabinetPlacementStatus from './placement-status'
 import useCabinetPlacementType from './placement-type'
-import { cabinetPresetById } from './presets'
+import { cabinetPresetById, CABINET_PRESETS, type CabinetPreset } from './presets'
 import {
   moduleMaxX,
   planRunModuleInsertion,
@@ -116,6 +116,22 @@ import {
 const PREVIEW_OPACITY = 0.55
 const ROTATE_STEP_RAD = Math.PI / 4
 const DEFAULT_PLACEMENT_PRESET = cabinetPresetById('base-door')
+
+/**
+ * The placement preset is chosen by the Build tab tile (or a future catalog
+ * card) via `setToolDefaults('cabinet', { placementPresetId })` — the same
+ * seeding gesture wall presets use. Falls back to 'base-door' so a bare tool
+ * activation still places a valid cabinet.
+ */
+function resolvePlacementPreset(): CabinetPreset {
+  const seeded = useEditor.getState().toolDefaults['cabinet'] as
+    | { placementPresetId?: unknown }
+    | undefined
+  const id = seeded?.placementPresetId
+  return typeof id === 'string'
+    ? (CABINET_PRESETS.find((p) => p.id === id) ?? DEFAULT_PLACEMENT_PRESET)
+    : DEFAULT_PLACEMENT_PRESET
+}
 const ISLAND_SEATING_OVERHANG = 0.3
 
 type CabinetPlacement = {
@@ -437,7 +453,7 @@ const CabinetTool = () => {
     const runDefaults = cabinetDefinition.defaults()
     return CabinetModuleNode.parse({
       ...cabinetModuleDefinition.defaults(),
-      ...DEFAULT_PLACEMENT_PRESET.createPatch(),
+      ...resolvePlacementPreset().createPatch(),
       showPlinth: runDefaults.showPlinth,
       plinthHeight: runDefaults.plinthHeight,
       toeKickDepth: runDefaults.toeKickDepth,
@@ -1161,7 +1177,7 @@ const CabinetTool = () => {
     }
 
     const buildRunNodes = (position: [number, number, number], yaw: number) => {
-      const patch = DEFAULT_PLACEMENT_PRESET.createPatch()
+      const patch = resolvePlacementPreset().createPatch()
       const island = islandModeRef.current
       const cabinet = CabinetNode.parse({
         ...cabinetDefinition.defaults(),
