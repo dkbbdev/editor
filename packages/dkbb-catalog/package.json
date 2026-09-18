@@ -1,0 +1,8 @@
+{
+  "name": "@dkbb/catalog",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "peerDependencies": { "@pascal-app/core": "*" },
+  "scripts": { "test": "bun test src" }
+}

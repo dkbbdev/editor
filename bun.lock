@@ -28,6 +28,7 @@
       "name": "editor",
       "version": "0.1.0",
       "dependencies": {
+        "@dkbb/catalog": "workspace:*",
         "@iconify/react": "^6.0.2",
         "@mint/pascal-plugin": "github:mintdotgg/mint-pascal-plugin#902c546dbaece6b31455c0dc394afe6b9cd136fe",
         "@number-flow/react": "^0.6.0",
@@ -142,6 +143,13 @@
         "@react-three/fiber": "^9",
         "react": "^18 || ^19",
         "three": "^0.186",
+      },
+    },
+    "packages/dkbb-catalog": {
+      "name": "@dkbb/catalog",
+      "version": "0.1.0",
+      "peerDependencies": {
+        "@pascal-app/core": "*",
       },
     },
     "packages/editor": {
@@ -415,6 +423,8 @@
     "@dgreenheck/ez-tree": ["@dgreenheck/ez-tree@1.1.0", "", { "peerDependencies": { "three": ">=0.167" } }, "sha512-6pvS6hD6B6h00dm0SnkgYeT4ABU5Y1Z9M44p1tXiV5C0eKrQy2sKECXshoaUv0qAOqYVL68w/PwadUxDFDiHUg=="],
 
     "@dimforge/rapier3d-compat": ["@dimforge/rapier3d-compat@0.12.0", "", {}, "sha512-uekIGetywIgopfD97oDL5PfeezkFpNhwlzlaEYNOA0N6ghdsOvh/HYjSMek5Q2O1PYvRSDFcqFVJl4r4ZBwOow=="],
+
+    "@dkbb/catalog": ["@dkbb/catalog@workspace:packages/dkbb-catalog"],
 
     "@dnd-kit/accessibility": ["@dnd-kit/accessibility@3.1.1", "", { "dependencies": { "tslib": "^2.0.0" }, "peerDependencies": { "react": ">=16.8.0" } }, "sha512-2P+YgaXF+gRsIihwwY1gCsQSYnu9Zyj2py8kY5fFvUM1qm2WA2u639R6YNVfU4GWr+ZM5mqEsfHZZLoRONbemw=="],
 

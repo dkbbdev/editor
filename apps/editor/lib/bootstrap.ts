@@ -18,6 +18,7 @@ import {
 import { poolHostPanel, poolPlugin } from '@pascal-app/plugin-pool'
 import { streetscapeHostPanel, streetscapePlugin } from '@pascal-app/plugin-streetscape'
 import { treesHostPanel, treesPlugin } from '@pascal-app/plugin-trees'
+import { dkbbCatalogPlugin } from '@dkbb/catalog'
 import { registerViewerPresentation } from '@pascal-app/viewer'
 
 // Idempotency guards: HMR can reload this module, but `registerNode`
@@ -94,6 +95,7 @@ export async function loadExternalPlugins(): Promise<void> {
 // discovery source instead of replacing it. Its Nature rail panel is host UI,
 // so it is registered separately from the core plugin manifest.
 extendPluginDiscovery(async () => [treesPlugin])
+extendPluginDiscovery(async () => [dkbbCatalogPlugin])
 registerEditorHostPanel(treesHostPanel)
 extendPluginDiscovery(async () => [environmentPlugin])
 registerEditorHostPanel(environmentHostPanel)
