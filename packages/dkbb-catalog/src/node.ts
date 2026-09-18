@@ -11,6 +11,8 @@ import { PROFILE_IDS } from './generated/profiles'
 export const DkbbCabinetNode = BaseNode.extend({
   id: objectId('dkbb-cabinet'),
   type: nodeType('dkbb-cabinet'),
+  position: z.tuple([z.number(), z.number(), z.number()]).default([0, 0, 0]),
+  rotation: z.tuple([z.number(), z.number(), z.number()]).default([0, 0, 0]),
   archetypeId: z.enum(ARCHETYPE_IDS),
   profileId: z.enum(PROFILE_IDS),
   widthMm: z.number().int().min(200).max(2400),

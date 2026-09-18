@@ -11,6 +11,12 @@ import { PROFILES } from './generated/profiles'
  * reads the profile's board thickness (the parametric gap PYTHA couldn't fill).
  */
 const dkbbCabinetDefinition = {
+  tool: () => import('./tool'),
+  preview: () => import('./preview'),
+  toolHints: [
+    { key: 'Left click', label: 'Place cabinet' },
+    { key: 'Esc', label: 'Cancel' },
+  ],
   kind: 'dkbb-cabinet',
   schemaVersion: 1,
   schema: DkbbCabinetNode,
