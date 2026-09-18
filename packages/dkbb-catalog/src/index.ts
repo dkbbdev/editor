@@ -2,6 +2,7 @@ import type React from 'react'
 import type { AnyNodeDefinition, Plugin } from '@pascal-app/core'
 import { DkbbCabinetNode } from './node'
 import { buildDkbbCabinetGeometry } from './geometry'
+import { dkbbCabinetParametrics } from './parametrics'
 import { ARCHETYPES } from './generated/archetypes'
 import { PROFILES } from './generated/profiles'
 
@@ -21,6 +22,7 @@ const dkbbCabinetDefinition = {
   schemaVersion: 1,
   schema: DkbbCabinetNode,
   geometry: buildDkbbCabinetGeometry,
+  parametrics: dkbbCabinetParametrics,
   category: 'furnish',
   capabilities: {
     movable: { axes: ['x', 'z'], gridSnap: true },
