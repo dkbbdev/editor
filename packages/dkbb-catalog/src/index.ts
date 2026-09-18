@@ -1,3 +1,4 @@
+import type React from 'react'
 import type { AnyNodeDefinition, Plugin } from '@pascal-app/core'
 import { DkbbCabinetNode } from './node'
 import { buildDkbbCabinetGeometry } from './geometry'
@@ -52,3 +53,27 @@ export const dkbbCatalogPlugin: Plugin = {
 export { DkbbCabinetNode } from './node'
 export { ARCHETYPES, ARCHETYPE_IDS, CATEGORIES } from './generated/archetypes'
 export { PROFILES, PROFILE_IDS } from './generated/profiles'
+
+type DkbbHostPanel = {
+  id: string
+  label: string
+  icon: { kind: 'iconify'; name: string }
+  component: () => Promise<{ default: React.ComponentType }>
+  pluginId: string
+  description: string
+  creator: { name: string; url?: string }
+  pluginUrl: string
+  defaultInstalled: boolean
+}
+
+export const dkbbCatalogHostPanel: DkbbHostPanel = {
+  id: 'dkbb:cabinet-catalog:panel',
+  label: 'DKBB',
+  icon: { kind: 'iconify', name: 'lucide:archive' },
+  component: () => import('./panel'),
+  pluginId: 'dkbb:cabinet-catalog',
+  description: 'V24 cabinet catalog — archetypes with swappable board profiles.',
+  creator: { name: 'DKBB', url: 'https://design.dekorproduct.com' },
+  pluginUrl: 'https://dkbbhq.synology.me:60080/podcharatee/V24-Library',
+  defaultInstalled: true,
+}

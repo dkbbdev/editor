@@ -18,7 +18,7 @@ import {
 import { poolHostPanel, poolPlugin } from '@pascal-app/plugin-pool'
 import { streetscapeHostPanel, streetscapePlugin } from '@pascal-app/plugin-streetscape'
 import { treesHostPanel, treesPlugin } from '@pascal-app/plugin-trees'
-import { dkbbCatalogPlugin } from '@dkbb/catalog'
+import { dkbbCatalogHostPanel, dkbbCatalogPlugin } from '@dkbb/catalog'
 import { registerViewerPresentation } from '@pascal-app/viewer'
 
 // Idempotency guards: HMR can reload this module, but `registerNode`
@@ -96,6 +96,7 @@ export async function loadExternalPlugins(): Promise<void> {
 // so it is registered separately from the core plugin manifest.
 extendPluginDiscovery(async () => [treesPlugin])
 extendPluginDiscovery(async () => [dkbbCatalogPlugin])
+registerEditorHostPanel(dkbbCatalogHostPanel)
 registerEditorHostPanel(treesHostPanel)
 extendPluginDiscovery(async () => [environmentPlugin])
 registerEditorHostPanel(environmentHostPanel)
