@@ -2,6 +2,7 @@ import type { ParametricDescriptor } from '@pascal-app/core'
 import { ARCHETYPES } from './generated/archetypes'
 import { PROFILES } from './generated/profiles'
 import type { DkbbCabinetNode } from './node'
+import { defaultStackFor } from './stack'
 
 const ARCHETYPE_IDS = ARCHETYPES.map((a) => a.id)
 const ARCHETYPES_BY_ID = new Map(ARCHETYPES.map((a) => [a.id, a]))
@@ -63,9 +64,11 @@ export const dkbbCabinetParametrics: ParametricDescriptor<DkbbCabinetNode> = {
           widthMm: a.params.width.default,
           depthMm: a.params.depth.default,
           heightMm: a.params.height.default,
+          stack: defaultStackFor(a.category, a.runTier),
         }
       }
     }
     return {}
   },
+  customPanel: () => import('./stack-panel'),
 }

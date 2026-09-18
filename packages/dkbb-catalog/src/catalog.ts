@@ -1,5 +1,6 @@
 import { ARCHETYPES } from './generated/archetypes'
 import { PROFILES } from './generated/profiles'
+import { defaultStackFor } from './stack'
 
 export function archetypeById(id: string) {
   return ARCHETYPES.find((a) => a.id === id)
@@ -21,5 +22,6 @@ export function dkbbDefaults(archetypeId: string, profileId: string) {
     depthMm: a.params.depth.default,
     heightMm: a.params.height.default,
     boardThicknessMm: p.board.thicknessMm,
+    stack: defaultStackFor(a.category, a.runTier),
   }
 }

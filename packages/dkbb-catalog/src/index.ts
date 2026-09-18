@@ -3,6 +3,7 @@ import type { AnyNodeDefinition, Plugin } from '@pascal-app/core'
 import { DkbbCabinetNode } from './node'
 import { buildDkbbCabinetGeometry } from './geometry'
 import { dkbbCabinetParametrics } from './parametrics'
+import { defaultStackFor } from './stack'
 import { ARCHETYPES } from './generated/archetypes'
 import { PROFILES } from './generated/profiles'
 
@@ -48,6 +49,7 @@ const dkbbCabinetDefinition = {
       widthMm: a.params.width.default,
       depthMm: a.params.depth.default,
       heightMm: a.params.height.default,
+      stack: defaultStackFor(a.category, a.runTier),
     }
   },
 }
