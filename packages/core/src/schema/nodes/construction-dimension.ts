@@ -82,7 +82,8 @@ export const ConstructionDimensionNode = BaseNode.extend({
   terminator: ConstructionDimensionTerminator.default('architectural-tick'),
   textPosition: ConstructionDimensionTextPosition.default('above'),
   imperialPrecision: ConstructionDimensionImperialPrecision.default('1/16'),
-  metricNotation: ConstructionDimensionMetricNotation.default('meters'),
+  // DKBB default: shop drawings dimension in millimeters.
+  metricNotation: ConstructionDimensionMetricNotation.default('millimeters'),
   extensionStartGap: z.number().finite().min(0).max(1).default(0.075),
   extensionOvershoot: z.number().finite().min(0).max(1).default(0.12),
   drawingType: ConstructionDrawingType.default('floor-plan'),
