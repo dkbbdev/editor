@@ -324,7 +324,7 @@ function normalizePersistedViewerState(value: unknown): PersistedViewerState {
     edges: pickString<EdgeMode>(state.edges, EDGE_MODES, 'soft'),
     shadows: typeof state.shadows === 'boolean' ? state.shadows : true,
     unit: pickString<ViewerState['unit']>(state.unit, UNITS, detectDefaultUnit()),
-    metricNotation: pickString<MetricNotation>(state.metricNotation, METRIC_NOTATIONS, 'meters'),
+    metricNotation: pickString<MetricNotation>(state.metricNotation, METRIC_NOTATIONS, 'millimeters'),
     unitExplicit:
       typeof state.unit === 'string' && UNITS.includes(state.unit as ViewerState['unit']),
     levelMode: pickString<ViewerState['levelMode']>(state.levelMode, LEVEL_MODES, 'stacked'),
@@ -409,7 +409,8 @@ const useViewer = create<ViewerState>()(
       setShadows: (shadows) => set({ shadows }),
 
       unit: detectDefaultUnit(),
-      metricNotation: 'meters',
+      // DKBB deployment default: cabinet-shop workflow reads millimeters.
+      metricNotation: 'millimeters',
       unitExplicit: false,
       setUnit: (unit) => set({ unit, unitExplicit: true }),
       setMetricNotation: (metricNotation) =>

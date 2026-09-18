@@ -164,7 +164,7 @@ export function readFloorplanContext(ctx: GeometryContext): FloorplanContextExte
   return {
     automaticDimensions: true,
     purpose: 'edit',
-    metricNotation: 'meters',
+    metricNotation: 'millimeters',
     wallDimensionReference: DEFAULT_FLOORPLAN_WALL_DIMENSION_REFERENCE,
   }
 }

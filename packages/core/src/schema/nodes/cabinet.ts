@@ -93,7 +93,10 @@ const cabinetBoxFields = {
   supportSlabId: z.string().optional(),
   width: z.number().min(0.05).max(3).default(0.5),
   depth: z.number().min(0.3).max(1.2).default(CABINET_METRIC_DEFAULTS.depth),
-  carcassHeight: z.number().min(0.4).max(2.4).default(CABINET_METRIC_DEFAULTS.carcassHeight),
+  // Max raised 2.4→3.3 m: DKBB tall/wardrobe units reach 3.0 m (V24 evidence:
+  // 187 library files over 2.4 m, max 3.0 m). Residential ceiling assumptions
+  // don't hold for commercial casework.
+  carcassHeight: z.number().min(0.4).max(3.3).default(CABINET_METRIC_DEFAULTS.carcassHeight),
   operationState: z.number().min(0).max(1).default(0),
   plinthHeight: z.number().min(0).max(0.3).default(CABINET_METRIC_DEFAULTS.plinthHeight),
   toeKickDepth: z.number().min(0).max(0.2).default(0.075),
