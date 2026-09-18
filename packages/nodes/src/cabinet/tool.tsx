@@ -449,11 +449,18 @@ const CabinetTool = () => {
   const surfaceForwardRef = useRef(new Vector3(0, 0, 1))
   const facingPointRef = useRef(new Vector3())
 
+  const seededPresetId = useEditor(
+    (s) => (s.toolDefaults['cabinet'] as { placementPresetId?: unknown } | undefined)?.placementPresetId,
+  )
   const previewNodeTemplate = useMemo(() => {
     const runDefaults = cabinetDefinition.defaults()
+    const preset =
+      typeof seededPresetId === 'string'
+        ? (CABINET_PRESETS.find((p) => p.id === seededPresetId) ?? DEFAULT_PLACEMENT_PRESET)
+        : DEFAULT_PLACEMENT_PRESET
     return CabinetModuleNode.parse({
       ...cabinetModuleDefinition.defaults(),
-      ...resolvePlacementPreset().createPatch(),
+      ...preset.createPatch(),
       showPlinth: runDefaults.showPlinth,
       plinthHeight: runDefaults.plinthHeight,
       toeKickDepth: runDefaults.toeKickDepth,
@@ -462,12 +469,21 @@ const CabinetTool = () => {
       countertopOverhang: runDefaults.countertopOverhang,
       countertopBackOverhang: runDefaults.countertopBackOverhang,
     })
-  }, [])
+  }, [seededPresetId])
   const [previewSize, setPreviewSize] = useState(() => ({
     depth: previewNodeTemplate.depth,
     height: previewNodeTemplate.carcassHeight,
     width: previewNodeTemplate.width,
   }))
+  // Re-seed the interactive size when a new preset is armed (tile click while
+  // the tool is already mounted) — the user hasn't dragged anything yet.
+  useEffect(() => {
+    setPreviewSize({
+      depth: previewNodeTemplate.depth,
+      height: previewNodeTemplate.carcassHeight,
+      width: previewNodeTemplate.width,
+    })
+  }, [previewNodeTemplate])
   const previewNode = useMemo(
     () =>
       CabinetModuleNode.parse({
